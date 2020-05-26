@@ -9,16 +9,23 @@
 import SwiftUI
 
 struct Home: View {
-   
+    
+    let store: Store
     
     var body: some View {
         VStack {
-            ProductRow(product: ProductSamples[0])
-            ProductRow(product: ProductSamples[1])
-            ProductRow(product: ProductSamples[2])
-        
+            //                    ProductRow(product: ProductSamples[0])
+            //                    ProductRow(product: ProductSamples[1])
+            //                    ProductRow(product: ProductSamples[2])
+            
+            NavigationView{
+                List(store.products){ product in
+                    NavigationLink(destination: Text("상세 정보")){
+                    ProductRow(product: product)
+                    }
+                }.navigationBarTitle("과일마트")
+            }
         }
-        
     }
 }
 
@@ -27,6 +34,6 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home()
+        Home(store: Store())
     }
 }

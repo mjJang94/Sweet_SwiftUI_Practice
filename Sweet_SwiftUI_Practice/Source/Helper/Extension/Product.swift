@@ -8,6 +8,11 @@
 
 import Foundation
 
+
+
+extension Product: Decodable {}
+extension Product: Identifiable {}
+
 let ProductSamples = [
     Product(name:"나는야 무화과", imageName: "fig", price: 3100, description: "소화가 잘되고 변비에 좋은 달달한 국내산 무화가예요. 고기와 찰떡궁합!"),
     Product(name:"으엑 퉤 레몬", imageName: "lemon", price: 2900, description: "비타민C도 많고, 많이 신 레몬.. 누가먹죠?"),
@@ -21,4 +26,8 @@ struct Product{
     let price: Int
     let description: String
     var isFavorite: Bool = false
+    
+    let id: UUID = UUID()
 }
+
+
