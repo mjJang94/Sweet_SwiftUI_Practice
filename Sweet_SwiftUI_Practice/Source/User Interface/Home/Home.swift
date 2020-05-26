@@ -14,9 +14,6 @@ struct Home: View {
     
     var body: some View {
         VStack {
-            //                    ProductRow(product: ProductSamples[0])
-            //                    ProductRow(product: ProductSamples[1])
-            //                    ProductRow(product: ProductSamples[2])
             
             NavigationView{
                 List(store.products){ product in
