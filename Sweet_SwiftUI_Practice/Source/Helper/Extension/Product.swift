@@ -12,6 +12,7 @@ import Foundation
 
 extension Product: Decodable {}
 extension Product: Identifiable {}
+extension Product: Equatable{}
 
 let ProductSamples = [
     Product(name:"나는야 무화과", imageName: "fig", price: 3100, description: "소화가 잘되고 변비에 좋은 달달한 국내산 무화가예요. 고기와 찰떡궁합!"),

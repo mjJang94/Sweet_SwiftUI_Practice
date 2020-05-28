@@ -10,10 +10,15 @@ import SwiftUI
 
 struct ProductDetailView: View {
     
+    @State private var quantity: Int = 1
     let product: Product
     
     var body: some View {
+        
+        
+        
         VStack(spacing: 0){
+            
             productImage
             orderView
         }.edgesIgnoringSafeArea(.top)
@@ -55,10 +60,11 @@ private extension ProductDetailView{
                 
                 Spacer()
                 
-                Image(systemName: "heart")
-                    .imageScale(.large)
-                    .foregroundColor(Color.peach)
-                    .frame(width: 32, height: 32)
+//                Image(systemName: "heart")
+//                    .imageScale(.large)
+//                    .foregroundColor(Color.peach)
+//                    .frame(width: 32, height: 32)
+                FavoriteButton(product: product)
             }
             
             Text(splitText(product.description))
@@ -82,25 +88,38 @@ private extension ProductDetailView{
     
     
     var priceInfo: some View {
-        VStack{
-            (Text("₩") + Text("\(product.price)").font(.title)
+        
+        let price = quantity * product.price
+        
+        return HStack{
+            (Text("₩")
+                + Text("\(price)").font(.title)
                 ).fontWeight(.medium)
-            
             Spacer()
-        }
-        .foregroundColor(.black)
+            QuantitySelector(quantity: $quantity)
+        }  .foregroundColor(.black)
+        
+        
+        
+        //            VStack{
+        //            (Text("₩") + Text("\(product.price)").font(.title)
+        //                ).fontWeight(.medium)
+        //
+        //            Spacer()
+        //        }
+        //        .foregroundColor(.black)
     }
     
     var placeOrderButton: some View{
         Button(action: {
             
         }) {
-           Capsule()
-            .fill(Color.peach)
-            .frame(maxWidth: .infinity, minHeight: 30, maxHeight: 55)
-            .overlay(Text("주문하기").font(.system(size: 20)).fontWeight(.medium)
-                .foregroundColor(Color.white))
-            .padding(.vertical, 8)
+            Capsule()
+                .fill(Color.peach)
+                .frame(maxWidth: .infinity, minHeight: 30, maxHeight: 55)
+                .overlay(Text("주문하기").font(.system(size: 20)).fontWeight(.medium)
+                    .foregroundColor(Color.white))
+                .padding(.vertical, 8)
         }
     }
     

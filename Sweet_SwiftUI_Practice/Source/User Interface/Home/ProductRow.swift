@@ -14,6 +14,16 @@ struct ProductRow: View {
     
     var body: some View {
         HStack{
+//            Group{
+//                ForEach(ProductSamples){
+//                    ProductRow(product: $0)
+//                }
+//                
+//                ProductRow(product: ProductSamples[0])
+//                    .preferredColorScheme(.dark)
+//            }
+//            .padding()
+//            .previewLayout(.sizeThatFits)
             
             productImage
             productDescription
@@ -27,12 +37,16 @@ struct ProductRow: View {
 }
 
 private extension ProductRow{
+    
     var productImage: some View{
-        Image(product.imageName)
-            .resizable()
-            .scaledToFill()
-            .frame(width:140)
-            .clipped()
+        
+        GeometryReader {_ in
+            Image(self.product.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(width:140)
+                .clipped()
+        }
     }
     
     
@@ -61,10 +75,12 @@ private extension ProductRow{
             
             Spacer()
             
-            Image(systemName: "heart")
-                .imageScale(.large)
-                .foregroundColor(Color.peach)
-                .frame(width: 32, height: 32)
+//            Image(systemName: "heart")
+//                .imageScale(.large)
+//                .foregroundColor(Color.peach)
+//                .frame(width: 32, height: 32)
+            
+            FavoriteButton(product: product)
             
             Image(systemName: "cart")
                 .foregroundColor(Color.peach)

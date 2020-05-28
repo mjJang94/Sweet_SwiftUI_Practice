@@ -10,17 +10,18 @@ import SwiftUI
 
 struct Home: View {
     
-    let store: Store
+    @EnvironmentObject private var store: Store
     
     var body: some View {
         VStack {
-            
+    
             NavigationView{
                 List(store.products){ product in
-                    NavigationLink(destination: Text("상세 정보")){
-                    ProductRow(product: product)
+                    NavigationLink(destination: ProductDetailView(product: product)){
+                        ProductRow(product: product)
                     }
                 }.navigationBarTitle("과일마트")
+                .buttonStyle(PlainButtonStyle())
             }
         }
     }
@@ -31,6 +32,8 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home(store: Store())
+            PreView(source: Home())
+        .environmentObject(Store())
+//        Home(store: Store())
     }
 }
