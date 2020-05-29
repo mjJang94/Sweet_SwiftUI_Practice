@@ -11,17 +11,19 @@ import SwiftUI
 struct ProductDetailView: View {
     
     @State private var quantity: Int = 1
+    @State private var showAlert: Bool = false
+    @EnvironmentObject private var store: Store
+    
     let product: Product
     
     var body: some View {
-        
-        
         
         VStack(spacing: 0){
             
             productImage
             orderView
         }.edgesIgnoringSafeArea(.top)
+            .alert(isPresented: $showAlert){confirmAlert}
         
     }
 }
@@ -60,10 +62,10 @@ private extension ProductDetailView{
                 
                 Spacer()
                 
-//                Image(systemName: "heart")
-//                    .imageScale(.large)
-//                    .foregroundColor(Color.peach)
-//                    .frame(width: 32, height: 32)
+                //                Image(systemName: "heart")
+                //                    .imageScale(.large)
+                //                    .foregroundColor(Color.peach)
+                //                    .frame(width: 32, height: 32)
                 FavoriteButton(product: product)
             }
             
@@ -99,20 +101,11 @@ private extension ProductDetailView{
             QuantitySelector(quantity: $quantity)
         }  .foregroundColor(.black)
         
-        
-        
-        //            VStack{
-        //            (Text("₩") + Text("\(product.price)").font(.title)
-        //                ).fontWeight(.medium)
-        //
-        //            Spacer()
-        //        }
-        //        .foregroundColor(.black)
     }
     
     var placeOrderButton: some View{
         Button(action: {
-            
+            self.showAlert = true
         }) {
             Capsule()
                 .fill(Color.peach)
@@ -123,6 +116,21 @@ private extension ProductDetailView{
         }
     }
     
+    var confirmAlert: Alert {
+        Alert(
+            title: Text("주문 확인"),
+            message: Text("\(product.name)을(를) \(quantity)개 구매하시겠습니까?"),
+            primaryButton: .default(Text("확인"),action: {
+                print("확인버튼 눌림")
+                self.placeOrder()
+            }),
+            secondaryButton: .cancel(Text("취소"))
+        )
+    }
+    
+    func placeOrder(){
+        store.placeOrder(product: product, quantity: quantity)
+    }
 }
 
 
